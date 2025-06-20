@@ -9,7 +9,8 @@ class DummyTask(Task):
         super(DummyTask, self).__init__(input, output, params=params, overwrite=overwrite)
 
     def run(self):
-        print(f'DummyTask(input={self.input()}, params={self.params()})')
+        value = self.param('param1')
+        print(f'DummyTask(input={self.input()}, params={value})')
 
 
 @click.command(help='Tests handling of multiple inputs')

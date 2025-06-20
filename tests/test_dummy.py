@@ -5,7 +5,7 @@ def test_me():
     task = DummyTask(
         {'images': [], 'model': ''},
         'D:\\Mosamatic\\CLI\\Output\\Decompress',
-        params=None,
+        params={'param1': '1'},
         overwrite=True,
     )
     task.run()
