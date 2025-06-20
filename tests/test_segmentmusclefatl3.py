@@ -1,11 +1,14 @@
-from mosamatic.tasks.segmentmusclefatl3task import SegmentMuscleFatL3Task
+from mosamatic.tasks import SegmentMuscleFatL3Task
 
 
 def test_me():
     task = SegmentMuscleFatL3Task(
-        'D:\\Mosamatic\\CLI\\Input',
-        'D:\\Mosamatic\\CLI\\Output\\Decompress',
-        params=None,
+        {
+            'images': 'D:\\Mosamatic\\AutomaticSliceSelection\\validation\\L3',
+            'model_files': 'D:\\Mosamatic\\PyTorchModelFiles\\leroyvolmer\\2.2\\L3',
+        },
+        'D:\\Mosamatic\\CLI\\Output\\SegmentMuscleFatL3Task',
+        params={'model_version': '2.2'},
         overwrite=True,
     )
     task.run()

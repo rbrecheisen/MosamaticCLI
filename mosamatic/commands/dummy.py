@@ -1,6 +1,6 @@
 import click
 
-from mosamatic.tasks.dummytask import DummyTask
+from mosamatic.tasks import DummyTask
 from mosamatic.utils import input_dict_from_input, param_dict_from_params
 
 

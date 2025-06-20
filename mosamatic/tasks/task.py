@@ -13,12 +13,16 @@ class Task:
         self._overwrite = overwrite
         if os.path.exists(self._output) and not self._overwrite:
             raise RuntimeError(f'Output already exists')
-        if os.path.isdir(self._output):
-            os.makedirs(self._output, exist_ok=True)
+        os.makedirs(self._output, exist_ok=True)
         if params and not isinstance(params, dict):
             raise RuntimeError('Parameters must be dictionary of name/value pairs')
 
-    def input(self):
+    def input(self, name=None):
+        if isinstance(self._input, dict):
+            if name in self._input.keys():
+                return self._input[name]
+            if name is None and len(self._input.keys()) > 0:
+                return self._input[next(iter(self._input))] # Return first element if no name provided
         return self._input
     
     def output(self):

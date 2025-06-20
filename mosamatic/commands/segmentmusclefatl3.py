@@ -1,6 +1,6 @@
 import click
 
-from mosamatic.tasks.segmentmusclefatl3task import SegmentMuscleFatL3Task
+from mosamatic.tasks import SegmentMuscleFatL3Task
 from mosamatic.utils import input_dict_from_input, param_dict_from_params
 
 

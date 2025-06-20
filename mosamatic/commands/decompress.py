@@ -1,6 +1,6 @@
 import click
 
-from mosamatic.tasks.decompressdicomfilestask import DecompressDicomFilesTask
+from mosamatic.tasks import DecompressDicomFilesTask
 
 
 @click.command(help='Decompress DICOM files')

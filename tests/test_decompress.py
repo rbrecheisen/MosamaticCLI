@@ -1,9 +1,9 @@
-from mosamatic.tasks.decompressdicomfilestask import DecompressDicomFilesTask
+from mosamatic.tasks import DecompressDicomFilesTask
 
 
 def test_me():
     task = DecompressDicomFilesTask(
-        'D:\\Mosamatic\\CLI\\Input',
+        'D:\\Mosamatic\\AutomaticSliceSelection\\validation\\L3',
         'D:\\Mosamatic\\CLI\\Output\\Decompress',
         params=None,
         overwrite=True,

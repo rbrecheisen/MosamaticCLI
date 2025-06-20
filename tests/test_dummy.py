@@ -1,4 +1,4 @@
-from mosamatic.tasks.dummytask import DummyTask
+from mosamatic.tasks import DummyTask
 
 
 def test_me():
