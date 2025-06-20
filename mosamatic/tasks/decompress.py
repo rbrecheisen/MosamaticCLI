@@ -1,13 +1,40 @@
+import os
+import shutil
 import click
 
+from mosamatic.tasks.task import Task
+from mosamatic.utils import (
+    is_jpeg2000_compressed, 
+    is_dicom, 
+    load_dicom,
+)
 
-class DecompressTask:
-    def __init__(self, input_dir, output_dir):
-        self._input_dir = input_dir
-        self._output_dir = output_dir
+
+class DecompressTask(Task):
+    def __init__(self, input_dir, output_dir, params=None, overwrite=False):
+        super(DecompressTask, self).__init__(input_dir, output_dir, params=params, overwrite=overwrite)
 
     def run(self):
-        click.echo(f'Running DecompressTask(input_dir={self._input_dir}, output_dir={self._output_dir})')
+        input_files = []
+        for f in os.listdir(self.input()):
+            f_path = os.path.join(self.input(), f)
+            if os.path.isfile(f_path):
+                if is_dicom(f_path):
+                    input_files.append(f_path)
+        if len(input_files) == 0:
+            raise RuntimeError(f'No DICOM files found in input directory')
+        nr_steps = len(input_files)
+        for step in range(nr_steps):
+            source = input_files[step]
+            source_name = os.path.split(source)[1]
+            target = os.path.join(self.output(), source_name)
+            p = load_dicom(source)
+            if is_jpeg2000_compressed(p):
+                p.decompress()
+                p.save_as(target)
+            else:
+                shutil.copy(source, target)
+            self.set_progress(step, nr_steps)
 
 
 @click.command()
