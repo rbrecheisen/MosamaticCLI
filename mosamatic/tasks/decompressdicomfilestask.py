@@ -1,6 +1,5 @@
 import os
 import shutil
-import click
 
 from mosamatic.tasks.task import Task
 from mosamatic.utils import (
@@ -10,9 +9,9 @@ from mosamatic.utils import (
 )
 
 
-class DecompressTask(Task):
+class DecompressDicomFilesTask(Task):
     def __init__(self, input, output, params=None, overwrite=False):
-        super(DecompressTask, self).__init__(input, output, params=params, overwrite=overwrite)
+        super(DecompressDicomFilesTask, self).__init__(input, output, params=params, overwrite=overwrite)
         if not os.path.isdir(input):
             raise RuntimeError('Input is not a directory')
         if not os.path.isdir(output):
@@ -38,12 +37,3 @@ class DecompressTask(Task):
             else:
                 shutil.copy(source, target)
             self.set_progress(step, nr_steps)
-
-
-@click.command(help='Decompress DICOM files')
-@click.option('--input', required=True, type=click.Path(exists=True), help='Input directory')
-@click.option('--output', required=True, type=click.Path(), help='Output directory')
-@click.option('--overwrite', type=click.BOOL, default=False, help='Overwrite (true/false)')
-def decompress(input, output, overwrite):
-    task = DecompressTask(input, output, overwrite=overwrite)
-    task.run()

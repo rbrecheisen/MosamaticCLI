@@ -1,9 +1,9 @@
 import click
 
-from mosamatic.tasks import (
+from mosamatic.commands import (
     decompress,
+    segmentmusclefatl3,
 )
-from mosamatic.tasks import decompress
 
 
 class CustomHelpGroup(click.Group):
@@ -24,3 +24,4 @@ def cli():
 
 
 cli.add_command(decompress.decompress)
+cli.add_command(segmentmusclefatl3.segmentmusclefatl3)
