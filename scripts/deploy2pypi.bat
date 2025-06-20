@@ -17,4 +17,7 @@ set /p TOKEN=<C:\Users\r.brecheisen\pypi-token.txt
 poetry build
 poetry publish --username __token__ --password %TOKEN%
 
+git tag v%VERSION%
+git push origin v%VERSION%
+
 endlocal
