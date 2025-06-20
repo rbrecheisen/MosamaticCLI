@@ -2,8 +2,9 @@ import click
 
 from mosamatic.tasks import (
     decompress,
-    decompressmulti,
+    dummy,
 )
+from mosamatic.tasks import decompress
 
 
 class CustomHelpGroup(click.Group):
@@ -24,4 +25,4 @@ def cli():
 
 
 cli.add_command(decompress.decompress)
-cli.add_command(decompressmulti.decompressmulti)
+cli.add_command(dummy.dummy)

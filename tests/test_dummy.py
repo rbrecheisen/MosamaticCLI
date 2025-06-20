@@ -1,9 +1,9 @@
-from mosamatic.tasks.decompress import DecompressTask
+from mosamatic.tasks.dummy import DummyTask
 
 
 def test_me():
-    task = DecompressTask(
-        'D:\\Mosamatic\\CLI\\Input',
+    task = DummyTask(
+        {'images': [], 'model': ''},
         'D:\\Mosamatic\\CLI\\Output\\Decompress',
         params=None,
         overwrite=True,

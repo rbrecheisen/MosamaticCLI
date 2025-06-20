@@ -1,4 +1,5 @@
 import time
+import click
 import math
 import warnings
 import pydicom
@@ -33,6 +34,26 @@ def duration(seconds: int) -> str:
     remainder = remainder - m * 60
     s = int(math.floor(remainder))
     return '{} hours, {} minutes, {} seconds'.format(h, m, s)
+
+
+def input_dict_from_input(input):
+    input_dict = {}
+    for item in input:
+        if '=' not in item:
+            raise click.BadParameter('Inputs must be in the format "name=path"')
+        name, path = item.split('=', 1)
+        input_dict[name] = path
+    return input_dict
+
+
+def param_dict_from_params(params):
+    param_dict = {}
+    for item in params:
+        if '=' not in item:
+            raise click.BadParameter('Parameters must be in the format "name=value"')
+        name, value = item.split('=', 1)
+        param_dict[name] = value
+    return param_dict
 
 
 def is_dicom(f):
