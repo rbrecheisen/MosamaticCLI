@@ -23,6 +23,6 @@ from mosamatic.tasks import CalculateScoresTask
     default=False, 
     help='Overwrite (true/false)'
 )
-def decompress(input, output, overwrite):
+def calculatescores(input, output, overwrite):
     task = CalculateScoresTask(input, output, overwrite=overwrite)
     task.run()

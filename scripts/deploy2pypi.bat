@@ -2,6 +2,14 @@
 
 setlocal
 
+poetry run pytest
+
+set /p CONFIRM="Did the tests run without errors? (y/n) "
+if /I NOT "%CONFIRM%"=="y" (
+    echo Aborting deployment
+    exit /b 1
+)
+
 poetry version minor
 
 FOR /F %%v IN ('poetry version --short') DO SET VERSION=%%v

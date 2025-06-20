@@ -1,6 +1,7 @@
 import click
 
 from mosamatic.commands import (
+    calculatescores,
     decompress,
     rescale,
     segmentmusclefatl3,
@@ -24,6 +25,7 @@ def cli():
     pass
 
 
+cli.add_command(calculatescores.calculatescores)
 cli.add_command(decompress.decompress)
 cli.add_command(rescale.rescale)
 cli.add_command(segmentmusclefatl3.segmentmusclefatl3)
