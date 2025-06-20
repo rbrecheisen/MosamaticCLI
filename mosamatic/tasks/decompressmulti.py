@@ -1,12 +1,10 @@
 import os
-import shutil
 import click
 
 from mosamatic.tasks.task import Task
+from mosamatic.tasks.decompress import DecompressTask
 from mosamatic.utils import (
-    is_jpeg2000_compressed, 
     is_dicom, 
-    load_dicom,
 )
 
 
@@ -29,14 +27,8 @@ class DecompressMultiTask(Task):
         nr_steps = len(input_files)
         for step in range(nr_steps):
             source = input_files[step]
-            source_name = os.path.split(source)[1]
-            target = os.path.join(self.output(), source_name)
-            p = load_dicom(source)
-            if is_jpeg2000_compressed(p):
-                p.decompress()
-                p.save_as(target)
-            else:
-                shutil.copy(source, target)
+            task = DecompressTask(source, self.output(), overwrite=self.overwrite())
+            task.run()
             self.set_progress(step, nr_steps)
 
 
