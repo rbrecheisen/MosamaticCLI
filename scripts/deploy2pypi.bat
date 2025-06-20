@@ -10,7 +10,14 @@ if /I NOT "%CONFIRM%"=="y" (
     exit /b 1
 )
 
-poetry version minor
+set /p BUMP_LEVEL="What version bump level do you want to use? [major, minor, patch (default)] "
+if /I "%BUMP_LEVEL%"=="major" (
+    poetry version major
+) else if /I "%BUMP_LEVEL%"=="minor" (
+    poetry version minor
+) else (
+    poetry version patch
+)
 
 FOR /F %%v IN ('poetry version --short') DO SET VERSION=%%v
 echo Deploying version %VERSION% to PyPI...
