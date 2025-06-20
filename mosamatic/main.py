@@ -2,8 +2,8 @@ import click
 
 from mosamatic.commands import (
     calculatescores,
-    decompress,
-    rescale,
+    decompressdicomfiles,
+    rescaledicomfiles,
     segmentmusclefatl3,
 )
 from mosamatic.utils import show_doc_command
@@ -27,8 +27,8 @@ def cli():
 
 
 cli.add_command(calculatescores.calculatescores)
-cli.add_command(decompress.decompress)
-cli.add_command(rescale.rescale)
+cli.add_command(decompressdicomfiles.decompressdicomfiles)
+cli.add_command(rescaledicomfiles.rescaledicomfiles)
 cli.add_command(segmentmusclefatl3.segmentmusclefatl3)
 
 cli.add_command(show_doc_command(cli)) # Special command to show long description for command

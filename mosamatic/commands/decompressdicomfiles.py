@@ -22,7 +22,7 @@ from mosamatic.tasks import DecompressDicomFilesTask
     default=False, 
     help='Overwrite (true/false)'
 )
-def decompress(input, output, overwrite):
+def decompressdicomfiles(input, output, overwrite):
     """
     Decompresses DICOM files.
     

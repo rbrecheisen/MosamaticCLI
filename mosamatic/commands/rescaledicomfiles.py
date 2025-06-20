@@ -29,7 +29,7 @@ from mosamatic.tasks import RescaleDicomFilesTask
     default=False, 
     help='Overwrite (true/false)'
 )
-def rescale(input, output, params, overwrite):
+def rescaledicomfiles(input, output, params, overwrite):
     """
     Rescales DICOM images to 512 x 512 (or any square dimension). Images that are
     already at the target size are copied to the output directory without modification.
