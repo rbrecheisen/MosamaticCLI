@@ -6,6 +6,7 @@ from mosamatic.commands import (
     rescale,
     segmentmusclefatl3,
 )
+from mosamatic.utils import show_doc_command
 
 
 class CustomHelpGroup(click.Group):
@@ -29,3 +30,5 @@ cli.add_command(calculatescores.calculatescores)
 cli.add_command(decompress.decompress)
 cli.add_command(rescale.rescale)
 cli.add_command(segmentmusclefatl3.segmentmusclefatl3)
+
+cli.add_command(show_doc_command(cli)) # Special command to show long description for command

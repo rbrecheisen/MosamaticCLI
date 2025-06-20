@@ -30,5 +30,20 @@ from mosamatic.tasks import RescaleDicomFilesTask
     help='Overwrite (true/false)'
 )
 def rescale(input, output, params, overwrite):
+    """
+    Rescales DICOM images to 512 x 512 (or any square dimension). Images that are
+    already at the target size are copied to the output directory without modification.
+    
+    Parameters
+    ----------
+    input : str
+        Path to directory with images.
+    
+    output : str
+        Path to output directory.
+    
+    overwrite : bool
+        Overwrite contents output directory true/false
+    """
     task = RescaleDicomFilesTask(input, output, params=params, overwrite=overwrite)
     task.run()

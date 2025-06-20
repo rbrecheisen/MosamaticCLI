@@ -23,5 +23,19 @@ from mosamatic.tasks import DecompressDicomFilesTask
     help='Overwrite (true/false)'
 )
 def decompress(input, output, overwrite):
+    """
+    Decompresses DICOM files.
+    
+    Parameters
+    ----------
+    input : str
+        Path to directory with DICOM files.
+    
+    output : str
+        Path to output directory.
+    
+    overwrite : bool
+        Overwrite contents output directory true/false
+    """
     task = DecompressDicomFilesTask(input, output, overwrite=overwrite)
     task.run()

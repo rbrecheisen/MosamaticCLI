@@ -8,6 +8,7 @@ import numpy as np
 
 from PIL import Image
 
+
 from pydicom.uid import (
     ExplicitVRLittleEndian, ImplicitVRLittleEndian, ExplicitVRBigEndian
 )
@@ -15,6 +16,28 @@ from pydicom.uid import (
 warnings.filterwarnings("ignore", message="Invalid value for VR UI:", category=UserWarning)
 
 MUSCLE, VAT, SAT = 1, 5, 7
+
+
+import textwrap
+
+def show_doc_command(cli_group: click.Group) -> click.Command:
+    @click.command(name="show-doc")
+    @click.argument("command_name", required=False)
+    def show_doc(command_name):
+        commands = cli_group.commands
+        if command_name:
+            cmd = commands.get(command_name)
+            if cmd and hasattr(cmd, 'callback') and cmd.callback.__doc__:
+                print(textwrap.dedent(cmd.callback.__doc__).strip())
+            else:
+                click.echo(f"No docstring found for command: {command_name}")
+        else:
+            click.echo("Available commands with docstrings:")
+            for name, cmd in commands.items():
+                if hasattr(cmd, 'callback') and cmd.callback.__doc__:
+                    click.echo(f"  {name}")
+            click.echo("\nUse: `mosamatic show-doc <command>` to view a command’s docstring.")
+    return show_doc
 
 
 def current_time_in_milliseconds():
