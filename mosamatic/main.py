@@ -2,7 +2,6 @@ import click
 
 from mosamatic.tasks import (
     decompress,
-    dummy,
 )
 from mosamatic.tasks import decompress
 
@@ -25,4 +24,3 @@ def cli():
 
 
 cli.add_command(decompress.decompress)
-cli.add_command(dummy.dummy)

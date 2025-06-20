@@ -2,7 +2,7 @@
 
 setlocal
 
-poetry version patch
+poetry version minor
 
 FOR /F %%v IN ('poetry version --short') DO SET VERSION=%%v
 echo Deploying version %VERSION% to PyPI...
