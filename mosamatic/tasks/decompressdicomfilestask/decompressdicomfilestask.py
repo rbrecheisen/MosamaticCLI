@@ -12,22 +12,22 @@ from mosamatic.utils import (
 class DecompressDicomFilesTask(Task):
     def __init__(self, input, output, params=None, overwrite=False):
         super(DecompressDicomFilesTask, self).__init__(input, output, params=params, overwrite=overwrite)
-        if not os.path.isdir(input):
-            raise RuntimeError('Input is not a directory')
-        if not os.path.isdir(output):
-            raise RuntimeError('Output is not a directory')
 
-    def run(self):
-        input_files = []
+    def load_images(self):
+        images = []
         for f in os.listdir(self.input()):
             f_path = os.path.join(self.input(), f)
             if is_dicom(f_path):
-                input_files.append(f_path)
-        if len(input_files) == 0:
+                images.append(f_path)
+        if len(images) == 0:
             raise RuntimeError('Input directory has no DICOM files')
-        nr_steps = len(input_files)
+        return images
+
+    def run(self):
+        images = self.load_images()
+        nr_steps = len(images)
         for step in range(nr_steps):
-            source = input_files[step]
+            source = images[step]
             source_name = os.path.split(source)[1]
             target = os.path.join(self.output(), source_name)
             p = load_dicom(source)

@@ -17,6 +17,7 @@ pillow = "11.2.1"
 python-gdcm = "3.0.25"
 torch = "2.7.1"
 torchvision = "0.22.1"
+scipy = "1.15.3"
 
 [tool.poetry.scripts]
 mosamatic = "mosamatic.main:cli"

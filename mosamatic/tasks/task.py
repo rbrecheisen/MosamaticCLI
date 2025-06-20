@@ -11,6 +11,7 @@ class Task:
         self._output = output
         self._params = params or {}
         self._overwrite = overwrite
+        self._class_name = self.__class__.__name__
         if os.path.exists(self._output) and not self._overwrite:
             raise RuntimeError(f'Output already exists')
         os.makedirs(self._output, exist_ok=True)
@@ -39,7 +40,7 @@ class Task:
         return self._overwrite
     
     def set_progress(self, step, nr_steps):
-        LOG.info(f'step {step} from {nr_steps}')
+        LOG.info(f'[{self._class_name}] step {step} from {nr_steps}')
     
     def run(self):
         raise NotImplementedError()
