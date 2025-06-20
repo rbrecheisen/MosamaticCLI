@@ -103,6 +103,17 @@ def is_jpeg2000_compressed(p):
     return p.file_meta.TransferSyntaxUID not in [ExplicitVRLittleEndian, ImplicitVRLittleEndian, ExplicitVRBigEndian]
 
 
+def is_numpy_array(value):
+    return isinstance(value, np.array)
+
+
+def load_numpy_array(f):
+    try:
+        return np.load(f)
+    except Exception as e:
+        return None
+
+
 def get_rescale_params(p):
     rescale_slope = getattr(p, 'RescaleSlope', None)
     rescale_intercept = getattr(p, 'RescaleIntercept', None)
