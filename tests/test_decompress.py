@@ -3,8 +3,8 @@ from mosamatic.tasks import DecompressDicomFilesTask
 
 def test_me():
     task = DecompressDicomFilesTask(
-        'D:\\Mosamatic\\AutomaticSliceSelection\\validation\\L3',
-        'D:\\Mosamatic\\CLI\\Output\\DecompressDicomFilesTask',
+        input='D:\\Mosamatic\\AutomaticSliceSelection\\validation\\L3',
+        output='D:\\Mosamatic\\CLI\\Output\\DecompressDicomFilesTask',
         params=None,
         overwrite=True,
     )

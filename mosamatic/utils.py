@@ -14,6 +14,8 @@ from pydicom.uid import (
 
 warnings.filterwarnings("ignore", message="Invalid value for VR UI:", category=UserWarning)
 
+MUSCLE, VAT, SAT = 1, 5, 7
+
 
 def current_time_in_milliseconds():
     return int(round(time.time() * 1000))
