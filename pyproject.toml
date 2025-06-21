@@ -1,12 +1,13 @@
 [tool.poetry]
 name = "mosamatic-cli"
-version = "1.5.4"
+version = "1.5.5"
 description = "A CLI tool for body composition analysis from DICOM CT scans"
 authors = ["Ralph Brecheisen <ralph.brecheisen@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [
-    { include = "mosamatic", from = "." }
+    { include = "mosamatic", from = "." },
+    { include = "models.py", from = "." },
 ]
 
 [tool.poetry.dependencies]
