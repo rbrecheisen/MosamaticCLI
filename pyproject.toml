@@ -5,7 +5,9 @@ description = "A CLI tool for body composition analysis from DICOM CT scans"
 authors = ["Ralph Brecheisen <ralph.brecheisen@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{ include = "mosamatic" }]
+packages = [
+    { include = "mosamatic", from = "." }
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"

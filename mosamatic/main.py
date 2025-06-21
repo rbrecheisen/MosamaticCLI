@@ -32,3 +32,19 @@ cli.add_command(rescaledicomfiles.rescaledicomfiles)
 cli.add_command(segmentmusclefatl3.segmentmusclefatl3)
 
 cli.add_command(show_doc_command(cli)) # Special command to show long description for command
+
+"""
+mosamatic/
+mosamatic/__init__.py
+mosamatic/main.py
+mosamatic/commands/
+mosamatic/commands/__init__.py
+mosamatic/commands/calculatescores.py
+mosamatic/tasks/
+mosamatic/tasks/__init__.py
+mosamatic/tasks/calculatescores/
+mosamatic/tasks/calculatescores/__init__.py
+mosamatic/tasks/calculatescores/calculatescores.py
+pyproject.toml
+"""
+
