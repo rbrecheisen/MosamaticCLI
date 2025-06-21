@@ -13,8 +13,8 @@ SOURCES = {
         }
     },
     'windows': {
-        'input': 'D:\\Mosamatic\\AutomaticSliceSelection\\validation\\L3',
-        'model_files': 'D:\\Mosamatic\\PyTorchModelFiles\\leroyvolmer\\2.2\\L3',
+        'input': 'D:\\Mosamatic\\CLI\\Input',
+        'model_files': 'D:\\Mosamatic\\PyTorchModelFiles\\L3\\2.2',
         'output': {
             'DecompressDicomFilesTask': 'D:\\Mosamatic\\CLI\\Output\\DecompressDicomFilesTask',
             'RescaleDicomFilesTask': 'D:\\Mosamatic\\CLI\\Output\\RescaleDicomFilesTask',
