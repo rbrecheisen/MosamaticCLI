@@ -19,6 +19,7 @@ def test_pipeline():
         overwrite=True,
     )
     task.run()
+    assert False, 'You need to test the task output!!!'
 
     task = RescaleDicomFilesTask(
         input=SOURCES['output']['DecompressDicomFilesTask'],
