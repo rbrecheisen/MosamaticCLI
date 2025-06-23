@@ -1,6 +1,7 @@
 import click
 
 from mosamatic.tasks import RescaleDicomFilesTask
+from mosamatic.utils import param_dict_from_params
 
 
 @click.command(help='Rescale DICOM files to target size')
@@ -45,5 +46,6 @@ def rescaledicomfiles(input, output, params, overwrite):
     overwrite : bool
         Overwrite contents output directory true/false
     """
+    params = param_dict_from_params(params)
     task = RescaleDicomFilesTask(input, output, params=params, overwrite=overwrite)
     task.run()

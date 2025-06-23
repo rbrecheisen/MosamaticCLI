@@ -9,7 +9,7 @@ LOG = LogManager()
 class Task:
     def __init__(self, input, output, params=None, overwrite=False):
         self._input = input
-        self._output = output
+        self._output = os.path.join(output, self.__class__.__name__)
         self._params = params or {}
         self._overwrite = overwrite
         self._class_name = self.__class__.__name__

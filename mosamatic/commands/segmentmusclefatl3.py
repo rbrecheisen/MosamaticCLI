@@ -9,7 +9,7 @@ from mosamatic.utils import input_dict_from_input, param_dict_from_params
     '--input', 
     multiple=True, 
     required=True, 
-    type=click.Path(exists=True), 
+    type=click.Path(), 
     help='Named input directories: images, model_files'
 )
 @click.option(
@@ -23,7 +23,7 @@ from mosamatic.utils import input_dict_from_input, param_dict_from_params
     multiple=True, 
     required=True, 
     type=str, 
-    help='Parameters: model_verion (default: 1.0)'
+    help='Parameters: model_verion'
 )
 @click.option(
     '--overwrite', 
@@ -39,7 +39,8 @@ def segmentmusclefatl3(input, output, params, overwrite):
     Parameters
     ----------
     input : str
-        Path to directory with images.
+        [images] Path to directory with images.
+        [model_files] Path to directory with TensorFlow model files
     
     output : str
         Path to output directory with segmentation files.
