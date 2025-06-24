@@ -53,7 +53,10 @@ def segmentmusclefatl3(input, output, params, overwrite):
     overwrite : bool
         Overwrite contents output directory true/false
     """
-    input = input_dict_from_input(input)
-    params = param_dict_from_params(params)
-    task = SegmentMuscleFatL3Task(input, output, params=params, overwrite=overwrite)
+    task = SegmentMuscleFatL3Task(
+        input_dict_from_input(input), 
+        output, 
+        params=param_dict_from_params(params), 
+        overwrite=overwrite,
+    )
     task.run()
