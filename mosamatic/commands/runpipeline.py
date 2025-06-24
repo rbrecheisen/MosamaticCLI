@@ -1,7 +1,7 @@
 import click
 
 from mosamatic.pipelines import DefaultPipeline
-from mosamatic.utils import param_dict_from_params
+from mosamatic.utils import param_dict_from_params, input_dict_from_input
 
 
 @click.command(help='Runs default body composition pipeline')
@@ -19,10 +19,11 @@ from mosamatic.utils import param_dict_from_params
     help='Output directory'
 )
 @click.option(
-    '--fullscan', 
+    '--params', 
+    multiple=True,
     type=click.BOOL, 
     default=False, 
-    help='Images correspond to single CT scan (true/false)'
+    help='Named parameters: model_version, fig_width, fig_height, full_scan'
 )
 @click.option(
     '--overwrite', 
@@ -30,7 +31,7 @@ from mosamatic.utils import param_dict_from_params
     default=False, 
     help='Overwrite (true/false)'
 )
-def runpipeline(input, output, fullscan, overwrite):
+def runpipeline(input, output, params, overwrite):
     """
     Runs default body composition pipeline on images in input directory. The input 
     directory can either contain a set of L3 images (one for each patient) or a set
@@ -50,17 +51,23 @@ def runpipeline(input, output, fullscan, overwrite):
     output : str
         Path to output directory
 
-    fullscan : bool
-        Wheter DICOM files in input directory correspond to L3 images (one for each
-        patient) or a single CT scan
+    params : dict
+        Dictionary of parameters:
+
+        {
+            'model_version': '<model_version>',
+            'fig_width': '<figure width for PNG images>',
+            'fig_height': '<figure height for PNG images>',
+            'full_scan': '<true|false>',
+        }
     
     overwrite : bool
         Overwrite contents output directory true/false
     """
     pipeline = DefaultPipeline(
-        input, 
-        output, 
-        params=fullscan, 
+        input=input_dict_from_input(input), 
+        output=output, 
+        params=param_dict_from_params(params), 
         overwrite=overwrite,
     )
     pipeline.run()
