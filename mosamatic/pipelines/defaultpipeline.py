@@ -35,7 +35,7 @@ class DefaultPipeline(Task):
                 input={
                     'images': os.path.join(output, 'RescaleDicomFilesTask'),
                     'segmentations': os.path.join(output, 'SegmentMuscleFatL3Task'),
-                }, output=output, overwrite=overwrite,
+                }, output=output, params={'file_type': 'npy'}, overwrite=overwrite,
             )
         ]
 
