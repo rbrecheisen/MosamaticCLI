@@ -1,6 +1,7 @@
 import click
 
 from mosamatic.tasks import CalculateScoresTask
+from mosamatic.utils import param_dict_from_params
 
 
 @click.command(help='Calculates body composition scores')
@@ -18,12 +19,18 @@ from mosamatic.tasks import CalculateScoresTask
     help='Output directory'
 )
 @click.option(
+    '--params',
+    multiple=True,
+    default='npy',
+    help='Named parameters: file_type=["npy"|"tag"]'
+)
+@click.option(
     '--overwrite', 
     type=click.BOOL, 
     default=False, 
     help='Overwrite (true/false)'
 )
-def calculatescores(input, output, overwrite):
+def calculatescores(input, output, params, overwrite):
     """
     Calculates the following body composition scores from muscle and fat
     segmentations extracted using the "segmentmusclefatl3" command:
@@ -48,9 +55,13 @@ def calculatescores(input, output, overwrite):
     
     output : str
         Path to output directory.
+
+    params : dict
+        Dictionary of parameter name=value pairs. Only one parameter allowed:
+        file_type=['npy'|'tag']
     
     overwrite : bool
         Overwrite contents output directory true/false
     """
-    task = CalculateScoresTask(input, output, overwrite=overwrite)
+    task = CalculateScoresTask(input, output, params=param_dict_from_params(params), overwrite=overwrite)
     task.run()

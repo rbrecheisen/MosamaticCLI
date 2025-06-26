@@ -11,6 +11,7 @@ from mosamatic.utils import (
     get_pixels_from_dicom_object,
     calculate_area,
     calculate_mean_radiation_attenuation,
+    get_pixels_from_tag_file,
 )
 from mosamatic.utils import MUSCLE, SAT, VAT
 
@@ -21,13 +22,14 @@ class CalculateScoresTask(Task):
     def __init__(self, input, output, params=None, overwrite=False):
         super(CalculateScoresTask, self).__init__(input, output, params=params, overwrite=overwrite)
 
-    def collect_img_seg_pairs(self, images, segmentations):
+    def collect_img_seg_pairs(self, images, segmentations, file_type='npy'):
+        file_type = '.tag' if file_type == 'tag' else '.seg.npy'
         img_seg_pairs = []
         for f_img_path in images:
             f_img_name = os.path.split(f_img_path)[1]
             for f_seg_path in segmentations:
                 f_seg_name = os.path.split(f_seg_path)[1]
-                if f_seg_name.removesuffix('.seg.npy') == f_img_name:
+                if f_seg_name.removesuffix(file_type) == f_img_name:
                     img_seg_pairs.append((f_img_path, f_seg_path))
         return img_seg_pairs
 
@@ -48,23 +50,29 @@ class CalculateScoresTask(Task):
         pixels = get_pixels_from_dicom_object(p, normalize=True)
         return pixels, p.PixelSpacing
 
-    def load_segmentations(self):
+    def load_segmentations(self, file_type='npy'):
+        file_type = '.tag' if file_type == 'tag' else '.seg.npy'
         segmentations = []
         for f in os.listdir(self.input('segmentations')):
             f_path = os.path.join(self.input('segmentations'), f)
-            if f.endswith('.seg.npy'):
+            if f.endswith(file_type):
                 segmentations.append(f_path)
         if len(segmentations) == 0:
             raise RuntimeError('Input directory has no segmentation files')
         return segmentations
 
-    def load_segmentation(self, f):
-        return np.load(f)
+    def load_segmentation(self, f, file_type='npy'):
+        if file_type == 'npy':
+            return np.load(f)
+        if file_type == 'tag':
+            return get_pixels_from_tag_file(f)
+        raise RuntimeError('Unknown file type')
 
     def run(self):
         images = self.load_images()
-        segmentations = self.load_segmentations()
-        img_seg_pairs = self.collect_img_seg_pairs(images, segmentations)
+        file_type = self.param('file_type')
+        segmentations = self.load_segmentations(file_type)
+        img_seg_pairs = self.collect_img_seg_pairs(images, segmentations, file_type)
         # Create empty data dictionary
         data = {
             'file': [], 
@@ -79,7 +87,7 @@ class CalculateScoresTask(Task):
             if image is None:
                 raise RuntimeError(f'Could not load DICOM image for file {img_seg_pairs[step][0]}')
             # Get segmentation for this image
-            segmentation = self.load_segmentation(img_seg_pairs[step][1])
+            segmentation = self.load_segmentation(img_seg_pairs[step][1], file_type)
             if segmentation is None:
                 raise RuntimeError(f'Could not load segmentation for file {img_seg_pairs[step][1]}')
             # Calculate metrics

@@ -1,4 +1,6 @@
 import os
+import binascii
+import struct
 import time
 import click
 import math
@@ -112,6 +114,27 @@ def load_numpy_array(f):
         return np.load(f)
     except Exception as e:
         return None
+
+
+def get_pixels_from_tag_file(tag_file_path):
+    f = open(tag_file_path, 'rb')
+    f.seek(0)
+    byte = f.read(1)
+    # Make sure to check the byte-value in Python 3!!
+    while byte != b'':
+        byte_hex = binascii.hexlify(byte)
+        if byte_hex == b'0c':
+            break
+        byte = f.read(1)
+    values = []
+    f.read(1)
+    while byte != b'':
+        v = struct.unpack('b', byte)
+        values.append(v)
+        byte = f.read(1)
+    values = np.asarray(values)
+    values = values.astype(np.uint16)
+    return values
 
 
 def get_rescale_params(p):
