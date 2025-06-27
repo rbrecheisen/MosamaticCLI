@@ -29,8 +29,17 @@ class CalculateScoresTask(Task):
             f_img_name = os.path.split(f_img_path)[1]
             for f_seg_path in segmentations:
                 f_seg_name = os.path.split(f_seg_path)[1]
-                if f_seg_name.removesuffix(file_type) == f_img_name:
-                    img_seg_pairs.append((f_img_path, f_seg_path))
+                if file_type == '.seg.npy':
+                    f_seg_name = f_seg_name.removesuffix(file_type)
+                    if f_seg_name == f_img_name:
+                        img_seg_pairs.append((f_img_path, f_seg_path))
+                elif file_type == '.tag':
+                    f_seg_name = f_seg_name.removesuffix(file_type).removesuffix('.dcm')
+                    f_img_name = f_img_name.removesuffix('.dcm')
+                    if f_seg_name == f_img_name:
+                        img_seg_pairs.append((f_img_path, f_seg_path))
+                else:
+                    raise RuntimeError('Unknown file type')
         return img_seg_pairs
 
     def load_images(self):
@@ -65,7 +74,7 @@ class CalculateScoresTask(Task):
         if file_type == 'npy':
             return np.load(f)
         if file_type == 'tag':
-            return get_pixels_from_tag_file(f)
+            return get_pixels_from_tag_file(f).reshape(512, 512)
         raise RuntimeError('Unknown file type')
 
     def run(self):
