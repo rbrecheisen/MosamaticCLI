@@ -5,6 +5,7 @@ from mosamatic.commands import (
     decompressdicomfiles,
     rescaledicomfiles,
     segmentmusclefatl3,
+    segmentmusclefatl3tensorflow,
     runpipeline,
 )
 from mosamatic.utils import show_doc_command
@@ -31,6 +32,7 @@ cli.add_command(calculatescores.calculatescores)
 cli.add_command(decompressdicomfiles.decompressdicomfiles)
 cli.add_command(rescaledicomfiles.rescaledicomfiles)
 cli.add_command(segmentmusclefatl3.segmentmusclefatl3)
+cli.add_command(segmentmusclefatl3tensorflow.segmentmusclefatl3tensorflow)
 cli.add_command(runpipeline.runpipeline)
 
 cli.add_command(show_doc_command(cli)) # Special command to show long description for command

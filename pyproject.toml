@@ -22,6 +22,12 @@ pillow = "^11.0"
 python-gdcm = "^3.0"
 torch = "^2.7"
 torchvision = "^0.22"
+tensorflow = "2.15.0"
+tensorboard = "2.15.2"
+tensorboard-data-server = "0.7.2"
+tensorflow-estimator = "2.15.0"
+tensorflow-intel = "2.15.0"
+tensorflow-io-gcs-filesystem = "0.31.0"
 scipy = "^1.1"
 
 [tool.poetry.scripts]
