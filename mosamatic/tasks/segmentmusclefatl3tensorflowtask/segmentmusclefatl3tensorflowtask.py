@@ -4,6 +4,8 @@ import numpy as np
 
 import models
 
+import tensorflow
+
 from mosamatic.tasks.task import Task
 from mosamatic.tasks.segmentmusclefatl3task.paramloader import ParamLoader
 from mosamatic.utils import (

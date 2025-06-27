@@ -8,6 +8,6 @@ del poetry.lock
 
 poetry cache clear pypi --all
 poetry update
-poetry install --extras "mac"
+poetry install
 
 endlocal
