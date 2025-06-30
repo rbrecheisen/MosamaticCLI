@@ -23,7 +23,7 @@ from mosamatic.tasks import CalculateScoresTask
     help='Output directory'
 )
 @click.option(
-    '--filetype',
+    '--file_type',
     default='npy',
     help='Options: "npy", "tag"'
 )
@@ -33,7 +33,7 @@ from mosamatic.tasks import CalculateScoresTask
     default=False, 
     help='Overwrite (true/false)'
 )
-def calculatescores(images_dir, segmentations_dir, output_dir, filetype, overwrite):
+def calculatescores(images_dir, segmentations_dir, output_dir, file_type, overwrite):
     """
     Calculates the following body composition scores from muscle and fat
     segmentations extracted using the "segmentmusclefatl3" command:
@@ -56,11 +56,11 @@ def calculatescores(images_dir, segmentations_dir, output_dir, filetype, overwri
     output_dir : str
         Path to output directory.
 
-    filetype : str
+    file_type : str
         Options: 'npy', 'tag'
     
     overwrite : bool
         Overwrite contents output directory true/false
     """
-    task = CalculateScoresTask(images_dir, segmentations_dir, output_dir, filetype, overwrite=overwrite)
+    task = CalculateScoresTask(images_dir, segmentations_dir, output_dir, file_type, overwrite=overwrite)
     task.run()

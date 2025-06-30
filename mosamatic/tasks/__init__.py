@@ -1,4 +1,5 @@
 from mosamatic.tasks.calculatescorestask.calculatescorestask import CalculateScoresTask
+from mosamatic.tasks.copyfilestask.copyfilestask import CopyFilesTask
 from mosamatic.tasks.createpngsfromsegmentationstask.createpngsfromsegmentationstask import CreatePngsFromSegmentationsTask
 from mosamatic.tasks.decompressdicomfilestask.decompressdicomfilestask import DecompressDicomFilesTask
 from mosamatic.tasks.rescaledicomfilestask.rescaledicomfilestask import RescaleDicomFilesTask

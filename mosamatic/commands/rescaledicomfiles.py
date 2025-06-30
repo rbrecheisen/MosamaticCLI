@@ -6,23 +6,21 @@ from mosamatic.utils import param_dict_from_params
 
 @click.command(help='Rescale DICOM files to target size')
 @click.option(
-    '--input', 
+    '--images_dir', 
     required=True, 
     type=click.Path(exists=True), 
-    help='Input directory'
+    help='Input directory with images'
 )
 @click.option(
-    '--output', 
+    '--output_dir', 
     required=True, 
     type=click.Path(), 
     help='Output directory'
 )
 @click.option(
-    '--params', 
-    multiple=True, 
-    required=True, 
-    type=str, 
-    help='Parameters: target_size'
+    '--target_size', 
+    default=512,
+    help='Target size of rescaled images (default: 512)'
 )
 @click.option(
     '--overwrite', 
@@ -30,22 +28,24 @@ from mosamatic.utils import param_dict_from_params
     default=False, 
     help='Overwrite (true/false)'
 )
-def rescaledicomfiles(input, output, params, overwrite):
+def rescaledicomfiles(images_dir, output_dir, target_size, overwrite):
     """
     Rescales DICOM images to 512 x 512 (or any square dimension). Images that are
     already at the target size are copied to the output directory without modification.
     
     Parameters
     ----------
-    input : str
+    images_dir : str
         Path to directory with images.
     
-    output : str
+    output_dir : str
         Path to output directory.
+
+    target_size : int
+        Target size of rescaled images (default: 512)
     
     overwrite : bool
         Overwrite contents output directory true/false
     """
-    params = param_dict_from_params(params)
-    task = RescaleDicomFilesTask(input, output, params=params, overwrite=overwrite)
+    task = RescaleDicomFilesTask(images_dir, output_dir, target_size, overwrite)
     task.run()

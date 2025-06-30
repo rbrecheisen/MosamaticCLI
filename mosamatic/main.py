@@ -2,6 +2,7 @@ import click
 
 from mosamatic.commands import (
     calculatescores,
+    copyfiles,
     decompressdicomfiles,
     rescaledicomfiles,
     segmentmusclefatl3,
@@ -29,6 +30,7 @@ def cli():
 
 
 cli.add_command(calculatescores.calculatescores)
+cli.add_command(copyfiles.copyfiles)
 cli.add_command(decompressdicomfiles.decompressdicomfiles)
 cli.add_command(rescaledicomfiles.rescaledicomfiles)
 cli.add_command(segmentmusclefatl3.segmentmusclefatl3)

@@ -13,15 +13,21 @@ from mosamatic.utils import (
 
 
 class RescaleDicomFilesTask(Task):
-    def __init__(self, input, output, params=None, overwrite=False):
-        super(RescaleDicomFilesTask, self).__init__(input, output, params=params, overwrite=overwrite)
+    def __init__(self, images_dir, output_dir, target_size, overwrite):
+        super(RescaleDicomFilesTask, self).__init__(
+            input={'images_dir': images_dir}, 
+            output=output_dir, 
+            params={'target_size': target_size}, 
+            overwrite=overwrite
+        )
 
     def load_images(self):
         images = []
-        for f in os.listdir(self.input()):
-            f_path = os.path.join(self.input(), f)
-            if is_dicom(f_path):
-                images.append(f_path)
+        for f in os.listdir(self.input('images_dir')):
+            f_path = os.path.join(self.input('images_dir'), f)
+            if os.path.isfile(f_path):
+                if is_dicom(f_path):
+                    images.append(f_path)
         if len(images) == 0:
             raise RuntimeError('Input directory has no DICOM files')
         return images
@@ -60,7 +66,6 @@ class RescaleDicomFilesTask(Task):
             if len(pixel_array.shape) == 2:
                 if p.Rows != target_size or p.Columns != target_size:
                     p = self.rescale_image(p, target_size)
-                    source_name = os.path.splitext(source_name)[0] + '_rescaled.dcm'
                     target = os.path.join(self.output(), source_name)
                     p.save_as(target)
                 else:

@@ -51,8 +51,9 @@ class CalculateScoresTask(Task):
         images = []
         for f in os.listdir(self.input('images')):
             f_path = os.path.join(self.input('images'), f)
-            if is_dicom(f_path):
-                images.append(f_path)
+            if os.path.isfile(f_path):
+                if is_dicom(f_path):
+                    images.append(f_path)
         if len(images) == 0:
             raise RuntimeError('Input directory has no DICOM files')
         return images
@@ -79,7 +80,13 @@ class CalculateScoresTask(Task):
         if file_type == 'npy':
             return np.load(f)
         if file_type == 'tag':
-            return get_pixels_from_tag_file(f).reshape(512, 512)
+            pixels = get_pixels_from_tag_file(f)
+            try:
+                pixels = pixels.reshape(512, 512)
+                return pixels
+            except Exception:
+                LOG.warning(f'Could not reshape TAG pixels to (512, 512), skipping...')
+                return None
         raise RuntimeError('Unknown file type')
 
     def run(self):
@@ -103,7 +110,8 @@ class CalculateScoresTask(Task):
             # Get segmentation for this image
             segmentation = self.load_segmentation(img_seg_pairs[step][1], file_type)
             if segmentation is None:
-                raise RuntimeError(f'Could not load segmentation for file {img_seg_pairs[step][1]}')
+                LOG.warning(f'Could not load segmentation for file {img_seg_pairs[step][1]}')
+                continue
             # Calculate metrics
             file_name = os.path.split(img_seg_pairs[step][0])[1]
             muscle_area = calculate_area(segmentation, MUSCLE, pixel_spacing)
