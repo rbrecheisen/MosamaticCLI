@@ -1,28 +1,31 @@
 import click
 
 from mosamatic.tasks import CalculateScoresTask
-from mosamatic.utils import param_dict_from_params
 
 
 @click.command(help='Calculates body composition scores')
 @click.option(
-    '--input', 
-    multiple=True,
+    '--images_dir', 
     required=True, 
     type=click.Path(exists=True), 
-    help='Named input directories: images, segmentations',
+    help='Directory with images',
 )
 @click.option(
-    '--output', 
+    '--segmentations_dir',
+    required=True,
+    type=click.Path(exists=True), 
+    help='Directory with segmentations',
+)
+@click.option(
+    '--output_dir', 
     required=True, 
     type=click.Path(), 
     help='Output directory'
 )
 @click.option(
-    '--params',
-    multiple=True,
+    '--filetype',
     default='npy',
-    help='Named parameters: file_type=["npy"|"tag"]'
+    help='Options: "npy", "tag"'
 )
 @click.option(
     '--overwrite', 
@@ -30,7 +33,7 @@ from mosamatic.utils import param_dict_from_params
     default=False, 
     help='Overwrite (true/false)'
 )
-def calculatescores(input, output, params, overwrite):
+def calculatescores(images_dir, segmentations_dir, output_dir, filetype, overwrite):
     """
     Calculates the following body composition scores from muscle and fat
     segmentations extracted using the "segmentmusclefatl3" command:
@@ -44,24 +47,20 @@ def calculatescores(input, output, params, overwrite):
     
     Parameters
     ----------
-    input : dict
-        Dictionary specifying directory where images are located. Can be the output
-        of the "decompress" or "rescale" commands:
-        
-        {
-            'images': '/path/to/images',
-            'segmentations': '/path/to/segmentations',
-        }
+    images_dir : str
+        Directory with input images.
+
+    segmentations_dir : str
+        Directory with input segmentation files.
     
-    output : str
+    output_dir : str
         Path to output directory.
 
-    params : dict
-        Dictionary of parameter name=value pairs. Only one parameter allowed:
-        file_type=['npy'|'tag']
+    filetype : str
+        Options: 'npy', 'tag'
     
     overwrite : bool
         Overwrite contents output directory true/false
     """
-    task = CalculateScoresTask(input, output, params=param_dict_from_params(params), overwrite=overwrite)
+    task = CalculateScoresTask(images_dir, segmentations_dir, output_dir, filetype, overwrite=overwrite)
     task.run()

@@ -19,8 +19,13 @@ LOG = LogManager()
 
 
 class CalculateScoresTask(Task):
-    def __init__(self, input, output, params=None, overwrite=False):
-        super(CalculateScoresTask, self).__init__(input, output, params=params, overwrite=overwrite)
+    def __init__(self, images_dir, segmentations_dir, output_dir, file_type, overwrite):
+        super(CalculateScoresTask, self).__init__(
+            input={'images': images_dir, 'segmentations': segmentations_dir},
+            output=output_dir,
+            params={'file_type': file_type},
+            overwrite=overwrite,
+        )
 
     def collect_img_seg_pairs(self, images, segmentations, file_type='npy'):
         file_type = '.tag' if file_type == 'tag' else '.seg.npy'
