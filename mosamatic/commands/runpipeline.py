@@ -6,23 +6,47 @@ from mosamatic.utils import param_dict_from_params, input_dict_from_input
 
 @click.command(help='Runs default body composition pipeline')
 @click.option(
-    '--input', 
-    multiple=True,
+    '--images_dir', 
     required=True, 
     type=click.Path(exists=True), 
-    help='Named input directories: images, model_files',
+    help='Input directory with images',
 )
 @click.option(
-    '--output', 
+    '--model_files_dir', 
+    required=True, 
+    type=click.Path(exists=True), 
+    help='Input directory with model files',
+)
+@click.option(
+    '--output_dir', 
     required=True, 
     type=click.Path(), 
     help='Output directory'
 )
 @click.option(
-    '--params', 
-    multiple=True,
+    '--model_type', 
+    required=True,
+    help='AI model type: "tensorflow", "pytorch"'
+)
+@click.option(
+    '--model_version', 
     required=True,
     help='Named parameters: model_type, model_version, fig_width, fig_height, full_scan'
+)
+@click.option(
+    '--fig_width', 
+    default=10,
+    help='Named parameters: model_type, model_version, fig_width, fig_height, full_scan'
+)
+@click.option(
+    '--fig_height', 
+    default=10,
+    help='Named parameters: model_type, model_version, fig_width, fig_height, full_scan'
+)
+@click.option(
+    '--full_scan', 
+    default=False,
+    help='Whether this is a full scan or a set of individual images'
 )
 @click.option(
     '--overwrite', 
@@ -30,7 +54,7 @@ from mosamatic.utils import param_dict_from_params, input_dict_from_input
     default=False, 
     help='Overwrite (true/false)'
 )
-def runpipeline(input, output, params, overwrite):
+def runpipeline(images_dir, model_files_dir, output_dir, model_type, model_version, fig_width, fig_height, full_scan, overwrite):
     """
     Runs default body composition pipeline on images in input directory. The input 
     directory can either contain a set of L3 images (one for each patient) or a set
@@ -39,35 +63,32 @@ def runpipeline(input, output, params, overwrite):
     
     Parameters
     ----------
-    input : dict
-        Path to input directory with L3 images or CT scan files
+    images_dir : str
+        Input directory with DICOM images.
 
-        {
-            'images': '/path/to/images',
-            'model_files': '/path/to/model_files',
-        }
+    model_files_dir : str
+        Input directory with AI model files.
     
-    output : str
+    output_dir : str
         Path to output directory
 
-    params : dict
-        Dictionary of parameters:
+    model_type : str
+        Model type of AI model: "tensorflow", "pytorch"
 
-        {
-            'model_type': ['pytorch'|'tensorflow'],
-            'model_version': '<model_version>',
-            'fig_width': '<figure width for PNG images>',
-            'fig_height': '<figure height for PNG images>',
-            'full_scan': '<true|false>',
-        }
+    model_version : str
+        Model version to use.
+
+    fig_width : int
+        Figure width for generated PNG images (default: 10)
+
+    fig_height : int
+        Figure height for generated PNG images (default: 10)
+
+    full_scan : bool
+        Whether images in input directory correspond to individual patient images or a single full scan.
     
     overwrite : bool
         Overwrite contents output directory true/false
     """
-    pipeline = DefaultPipeline(
-        input=input_dict_from_input(input), 
-        output=output, 
-        params=param_dict_from_params(params), 
-        overwrite=overwrite,
-    )
+    pipeline = DefaultPipeline(images_dir, model_files_dir, output_dir, model_type, model_version, fig_width, fig_height, full_scan, overwrite)
     pipeline.run()

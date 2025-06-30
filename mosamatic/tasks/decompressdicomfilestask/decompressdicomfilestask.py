@@ -10,13 +10,18 @@ from mosamatic.utils import (
 
 
 class DecompressDicomFilesTask(Task):
-    def __init__(self, input, output, params=None, overwrite=False):
-        super(DecompressDicomFilesTask, self).__init__(input, output, params=params, overwrite=overwrite)
+    def __init__(self, images_dir, output_dir, overwrite):
+        super(DecompressDicomFilesTask, self).__init__(
+            input={'images_dir': images_dir}, 
+            output=output_dir, 
+            params=None, 
+            overwrite=overwrite
+        )
 
     def load_images(self):
         images = []
-        for f in os.listdir(self.input()):
-            f_path = os.path.join(self.input(), f)
+        for f in os.listdir(self.input('images_dir')):
+            f_path = os.path.join(self.input('images_dir'), f)
             if is_dicom(f_path):
                 images.append(f_path)
         if len(images) == 0:

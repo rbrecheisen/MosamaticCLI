@@ -12,54 +12,59 @@ from mosamatic.tasks import (
 
 
 class DefaultPipeline(Task):
-    def __init__(self, input, output, params=None, overwrite=False):
-        super(DefaultPipeline, self).__init__(input, output, params, overwrite)
+    def __init__(self, images_dir, model_files_dir, output_dir, model_type, model_version, fig_width, fig_height, full_scan, overwrite):
+        super(DefaultPipeline, self).__init__(
+            input={'images_dir': images_dir, 'model_files_dir': model_files_dir}, 
+            output=output_dir, 
+            params={'model_type': model_type, 'model_version': model_version, 'fig_width': fig_width, 'fig_height': fig_height, 'full_scan': full_scan}, 
+            overwrite=overwrite
+        )
         model_type = self.param('model_type')
         segmentation_task_class = SegmentMuscleFatL3Task if model_type == 'pytorch' else SegmentMuscleFatL3TensorFlowTask
         self._tasks = [
 
             DecompressDicomFilesTask(
-                input=self.input('images'), 
-                output=output, 
+                input=self.input('images_dir'), 
+                output=self.output(), 
                 overwrite=overwrite,
             ),
 
             RescaleDicomFilesTask(
-                input=os.path.join(output, 'DecompressDicomFilesTask'), 
+                input=os.path.join(self.output(), 'DecompressDicomFilesTask'), 
                 params={
                     'target_size': self.param('target_size')
                 }, 
-                output=output, 
+                output=self.output(), 
                 overwrite=overwrite,
             ),
 
             segmentation_task_class(
                 input={
-                    'images': os.path.join(output, 'RescaleDicomFilesTask'),
-                    'model_files': self.input('model_files'),
+                    'images': os.path.join(self.output(), 'RescaleDicomFilesTask'),
+                    'model_files': self.input('model_files_dir'),
                 }, params={
                     'model_version': self.param('model_version')
                 }, 
-                output=output, 
+                output=self.output(), 
                 overwrite=overwrite,
             ),
 
             CreatePngsFromSegmentationsTask(
-                input=os.path.join(output, 'SegmentMuscleFatL3Task'), 
+                input=os.path.join(self.output(), 'SegmentMuscleFatL3Task'), 
                 params={
                     'fig_width': self.param('fig_width'), 
                     'fig_height': self.param('fig_height'),
                 }, 
-                output=output, 
+                output=self.output(), 
                 overwrite=overwrite,
             ),
 
             CalculateScoresTask(
                 input={
-                    'images': os.path.join(output, 'RescaleDicomFilesTask'),
-                    'segmentations': os.path.join(output, 'SegmentMuscleFatL3Task'),
+                    'images': os.path.join(self.output(), 'RescaleDicomFilesTask'),
+                    'segmentations': os.path.join(self.output(), 'SegmentMuscleFatL3Task'),
                 }, 
-                output=output, 
+                output=self.output(), 
                 params={'file_type': 'npy'}, 
                 overwrite=overwrite,
             )

@@ -19,13 +19,18 @@ DEVICE = 'cpu'
 
 
 class SegmentMuscleFatL3Task(Task):
-    def __init__(self, input, output, params=None, overwrite=False):
-        super(SegmentMuscleFatL3Task, self).__init__(input, output, params=params, overwrite=overwrite)
+    def __init__(self, images_dir, model_files_dir, output_dir, model_version, overwrite):
+        super(SegmentMuscleFatL3Task, self).__init__(
+            input={'images_dir': images_dir, 'model_files_dir': model_files_dir}, 
+            output=output_dir, 
+            params={'model_version': model_version}, 
+            overwrite=overwrite
+        )
 
     def load_images(self):
         images = []
-        for f in os.listdir(self.input('images')):
-            f_path = os.path.join(self.input('images'), f)
+        for f in os.listdir(self.input('images_dir')):
+            f_path = os.path.join(self.input('images_dir'), f)
             if is_dicom(f_path):
                 images.append(f_path)
         if len(images) == 0:
@@ -34,8 +39,8 @@ class SegmentMuscleFatL3Task(Task):
 
     def load_model_files(self):
         model_files = []
-        for f in os.listdir(self.input('model_files')):
-            f_path = os.path.join(self.input('model_files'), f)
+        for f in os.listdir(self.input('model_files_dir')):
+            f_path = os.path.join(self.input('model_files_dir'), f)
             if f_path.endswith('.pt') or f_path.endswith('.json'):
                 model_files.append(f_path)
         if len(model_files) != 3:

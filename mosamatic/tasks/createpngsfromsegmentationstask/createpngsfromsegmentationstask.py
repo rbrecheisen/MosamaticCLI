@@ -13,13 +13,18 @@ LOG = LogManager()
 
 
 class CreatePngsFromSegmentationsTask(Task):
-    def __init__(self, input, output, params=None, overwrite=False):
-        super(CreatePngsFromSegmentationsTask, self).__init__(input, output, params=params, overwrite=overwrite)
+    def __init__(self, segmentations_dir, output_dir, fig_width, fig_height, overwrite):
+        super(CreatePngsFromSegmentationsTask, self).__init__(
+            input={'segmentations_dir': segmentations_dir}, 
+            output=output_dir, 
+            params={'fig_width': fig_width, 'fig_height': fig_height}, 
+            overwrite=overwrite,
+        )
 
     def load_segmentations(self):
         segmentations = []
-        for f in os.listdir(self.input()):
-            f_path = os.path.join(self.input(), f)
+        for f in os.listdir(self.input('segmentations_dir')):
+            f_path = os.path.join(self.input('segmentations_dir'), f)
             if f.endswith('.seg.npy'):
                 segmentations.append(f_path)
         if len(segmentations) == 0:
