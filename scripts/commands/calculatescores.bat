@@ -2,9 +2,15 @@
 
 setlocal
 
+@REM TEST DATA
 @REM set IMAGES_DIR="G:\My Drive\data\Mosamatic\testdata\L3"
-set IMAGES_DIR="D:\Mosamatic\CLI\Output\\RescaleDicomFilesTask"
 @REM set SEGMENTATIONS_DIR="G:\My Drive\data\Mosamatic\testdata\L3"
+@REM set OUTPUT_DIR="D:\Mosamatic\CLI\Output"
+@REM set FILE_TYPE="tag"
+@REM set OVERWRITE="true"
+
+@REM KU LEUVEN T4 FRANCESCA
+set IMAGES_DIR="D:\Mosamatic\CLI\Output\\RescaleDicomFilesTask"
 set SEGMENTATIONS_DIR="D:\Mosamatic\CLI\Output\\CopyFilesTask"
 set OUTPUT_DIR="D:\Mosamatic\CLI\Output"
 set FILE_TYPE="tag"

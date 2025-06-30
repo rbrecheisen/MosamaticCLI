@@ -2,6 +2,7 @@
 
 setlocal
 
+@REM KU LEUVEN T4 FRANCESCA
 set INPUT_DIR="L:\FHML_SURGERY\AImodel\T4\KU_Leuven"
 set OUTPUT_DIR="D:\Mosamatic\CLI\Output"
 set EXTENSION="tag"
