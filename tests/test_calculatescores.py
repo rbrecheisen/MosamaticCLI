@@ -7,10 +7,11 @@ SOURCES = get_sources()
 
 def test_tag():
     task = CalculateScoresTask(
-        input={
-            'images': SOURCES['input'],
-            'segmentations': SOURCES['input'],
-        }, output=SOURCES['output'], params={'file_type': 'tag'}, overwrite=True,
+        images_dir=SOURCES['input'],
+        segmentations_dir=SOURCES['input'],
+        output_dir=SOURCES['output'], 
+        file_type='tag', 
+        overwrite=True,
     )
     task.run()
 

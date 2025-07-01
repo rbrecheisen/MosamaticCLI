@@ -31,17 +31,17 @@ from mosamatic.utils import param_dict_from_params, input_dict_from_input
 @click.option(
     '--model_version', 
     required=True,
-    help='Named parameters: model_type, model_version, fig_width, fig_height, full_scan'
+    help='Model version to use'
 )
 @click.option(
     '--fig_width', 
     default=10,
-    help='Named parameters: model_type, model_version, fig_width, fig_height, full_scan'
+    help='Figure width PNG images'
 )
 @click.option(
     '--fig_height', 
     default=10,
-    help='Named parameters: model_type, model_version, fig_width, fig_height, full_scan'
+    help='Figure height PNG images'
 )
 @click.option(
     '--full_scan', 
@@ -54,7 +54,7 @@ from mosamatic.utils import param_dict_from_params, input_dict_from_input
     default=False, 
     help='Overwrite (true/false)'
 )
-def runpipeline(images_dir, model_files_dir, output_dir, model_type, model_version, fig_width, fig_height, full_scan, overwrite):
+def runpipeline(images_dir, model_files_dir, output_dir, model_type, model_version, target_size, fig_width, fig_height, full_scan, overwrite):
     """
     Runs default body composition pipeline on images in input directory. The input 
     directory can either contain a set of L3 images (one for each patient) or a set
@@ -78,6 +78,9 @@ def runpipeline(images_dir, model_files_dir, output_dir, model_type, model_versi
     model_version : str
         Model version to use.
 
+    target_size : int
+        Target size for PNG images.
+
     fig_width : int
         Figure width for generated PNG images (default: 10)
 
@@ -90,5 +93,16 @@ def runpipeline(images_dir, model_files_dir, output_dir, model_type, model_versi
     overwrite : bool
         Overwrite contents output directory true/false
     """
-    pipeline = DefaultPipeline(images_dir, model_files_dir, output_dir, model_type, model_version, fig_width, fig_height, full_scan, overwrite)
+    pipeline = DefaultPipeline(
+        images_dir, 
+        model_files_dir, 
+        output_dir, 
+        model_type, 
+        model_version, 
+        target_size, 
+        fig_width, 
+        fig_height, 
+        full_scan, 
+        overwrite
+    )
     pipeline.run()
