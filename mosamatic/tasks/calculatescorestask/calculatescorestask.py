@@ -21,7 +21,7 @@ LOG = LogManager()
 class CalculateScoresTask(Task):
     def __init__(self, images_dir, segmentations_dir, output_dir, file_type, overwrite):
         super(CalculateScoresTask, self).__init__(
-            input={'images': images_dir, 'segmentations': segmentations_dir},
+            input={'images_dir': images_dir, 'segmentations_dir': segmentations_dir},
             output=output_dir,
             params={'file_type': file_type},
             overwrite=overwrite,
@@ -49,8 +49,8 @@ class CalculateScoresTask(Task):
 
     def load_images(self):
         images = []
-        for f in os.listdir(self.input('images')):
-            f_path = os.path.join(self.input('images'), f)
+        for f in os.listdir(self.input('images_dir')):
+            f_path = os.path.join(self.input('images_dir'), f)
             if os.path.isfile(f_path):
                 if is_dicom(f_path):
                     images.append(f_path)
@@ -68,8 +68,8 @@ class CalculateScoresTask(Task):
     def load_segmentations(self, file_type='npy'):
         file_type = '.tag' if file_type == 'tag' else '.seg.npy'
         segmentations = []
-        for f in os.listdir(self.input('segmentations')):
-            f_path = os.path.join(self.input('segmentations'), f)
+        for f in os.listdir(self.input('segmentations_dir')):
+            f_path = os.path.join(self.input('segmentations_dir'), f)
             if f.endswith(file_type):
                 segmentations.append(f_path)
         if len(segmentations) == 0:

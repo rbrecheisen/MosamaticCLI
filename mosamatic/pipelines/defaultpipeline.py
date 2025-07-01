@@ -45,7 +45,10 @@ class DefaultPipeline(Task):
             ),
 
             CreatePngsFromSegmentationsTask(
-                segmentations_dir=os.path.join(self.output(), 'SegmentMuscleFatL3Task'),
+                segmentations_dir=os.path.join(
+                    self.output(), 
+                    'SegmentMuscleFatL3Task' if model_type == 'pytorch' else 'SegmentMuscleFatL3TensorFlowTask'
+                ),
                 output_dir=self.output(),
                 fig_width=self.param('fig_width'),
                 fig_height=self.param('fig_height'),
@@ -54,7 +57,10 @@ class DefaultPipeline(Task):
 
             CalculateScoresTask(
                 images_dir=os.path.join(self.output(), 'RescaleDicomFilesTask'),
-                segmentations_dir=os.path.join(self.output(), 'SegmentMuscleFatL3Task'),
+                segmentations_dir=os.path.join(
+                    self.output(), 
+                    'SegmentMuscleFatL3Task' if model_type == 'pytorch' else 'SegmentMuscleFatL3TensorFlowTask'
+                ),
                 output_dir=self.output(), 
                 file_type='npy',
                 overwrite=overwrite,
