@@ -35,12 +35,12 @@ poetry build
 
 poetry publish --username __token__ --password %TOKEN%
 
+copy /Y pyproject.toml pyproject.toml.windows
+
 git tag v%VERSION%
 git push origin v%VERSION%
 git add -A
 git commit -m "Saving pyproject.toml"
 git push
-
-copy /Y pyproject.toml pyproject.toml.windows
 
 endlocal
