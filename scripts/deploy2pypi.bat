@@ -2,6 +2,9 @@
 
 setlocal
 
+del pyproject.toml
+copy pyproject.toml.windows pyproject.toml
+
 poetry run pytest
 
 set /p CONFIRM="Did the tests run without errors? (y/n) "
