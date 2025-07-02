@@ -1,6 +1,8 @@
 #!/bin/bash
 
-poetry run pytest
+cp -f pyproject.toml.macos pyproject.toml
+
+poetry run pytest -s
 
 read -p "Did the tests run without errors? (y/n) " CONFIRM
 if [ "${CONFIRM}" == "y" ]; then
@@ -36,3 +38,5 @@ git push origin v${VERSION}
 git add -A
 git commit -m "Saving pyproject.toml"
 git push
+
+cp -f pyproject.toml pyproject.toml.macos

@@ -2,8 +2,7 @@
 
 setlocal
 
-del pyproject.toml
-copy pyproject.toml.windows pyproject.toml
+copy /Y pyproject.toml.windows pyproject.toml
 
 poetry run mosamatic
 

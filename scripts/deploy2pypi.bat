@@ -2,8 +2,7 @@
 
 setlocal
 
-del pyproject.toml
-copy pyproject.toml.windows pyproject.toml
+copy /Y pyproject.toml.windows pyproject.toml
 
 poetry run pytest -s
 
@@ -41,5 +40,7 @@ git push origin v%VERSION%
 git add -A
 git commit -m "Saving pyproject.toml"
 git push
+
+copy /Y pyproject.toml pyproject.toml.windows
 
 endlocal
