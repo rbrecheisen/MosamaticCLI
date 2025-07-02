@@ -2,9 +2,8 @@
 
 setlocal
 
-@REM KU LEUVEN T4 FRANCESCA
-set IMAGES_DIR="L:\FHML_SURGERY\AImodel\T4\KU_Leuven"
-set MODEL_FILES_DIR="G:\My Drive\data\Mosamatic\models\tensorflow\L3\1.0"
+set IMAGES_DIR="G:\My Drive\data\Mosamatic\testdata\L3"
+set MODEL_FILES_DIR="G:\My Drive\data\Mosamatic\models\tensorflow\1.0\L3"
 set TARGET_SIZE="512"
 set MODEL_TYPE="tensorflow"
 set MODEL_VERSION="1.0"

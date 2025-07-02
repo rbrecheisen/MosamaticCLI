@@ -34,6 +34,11 @@ from mosamatic.utils import param_dict_from_params, input_dict_from_input
     help='Model version to use'
 )
 @click.option(
+    '--target_size', 
+    default=512,
+    help='Target size of rescaled images'
+)
+@click.option(
     '--fig_width', 
     default=10,
     help='Figure width PNG images'
