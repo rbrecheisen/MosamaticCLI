@@ -2,4 +2,4 @@
 
 cp -f pyproject.toml.macos pyproject.toml
 
-poetry run pytest -s
+pytest -s
