@@ -4,6 +4,7 @@ setlocal
 
 copy /Y pyproject.toml.windows pyproject.toml
 
-poetry run pytest -s
+@REM poetry run pytest -s
+pytest -s
 
 endlocal
