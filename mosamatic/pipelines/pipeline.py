@@ -1,9 +1,9 @@
-class Pipeline:
+from mosamatic.tasks.task import Task
+
+
+class Pipeline(Task):
     def __init__(self, input, output, params=None, overwrite=False):
-        self._input = input
-        self._output = output
-        self._params = params
-        self._overwrite = overwrite
+        super(Pipeline, self).__init__(input, output, params, overwrite)
         self._tasks = []
 
     def add_task(self, task):

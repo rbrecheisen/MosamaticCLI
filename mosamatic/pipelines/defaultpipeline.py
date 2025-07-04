@@ -1,6 +1,6 @@
 import os
 
-from mosamatic.tasks.task import Task
+from mosamatic.pipelines.pipeline import Pipeline
 from mosamatic.tasks import (
     DecompressDicomFilesTask, 
     RescaleDicomFilesTask, 
@@ -11,7 +11,7 @@ from mosamatic.tasks import (
 )
 
 
-class DefaultPipeline(Task):
+class DefaultPipeline(Pipeline):
     def __init__(self, images_dir, model_files_dir, output_dir, model_type, model_version, target_size, fig_width, fig_height, full_scan, overwrite):
         super(DefaultPipeline, self).__init__(
             input={'images_dir': images_dir, 'model_files_dir': model_files_dir}, 
@@ -21,29 +21,31 @@ class DefaultPipeline(Task):
         )
         model_type = self.param('model_type')
         segmentation_task_class = SegmentMuscleFatL3Task if model_type == 'pytorch' else SegmentMuscleFatL3TensorFlowTask
-        self._tasks = [
-
+        self.add_task(
             DecompressDicomFilesTask(
                 images_dir=self.input('images_dir'),
                 output_dir=self.output(), 
                 overwrite=overwrite,
-            ),
-
+            )
+        )
+        self.add_task(
             RescaleDicomFilesTask(
                 images_dir=os.path.join(self.output(), 'DecompressDicomFilesTask'), 
                 target_size=self.param('target_size'),
                 output_dir=self.output(), 
                 overwrite=overwrite,
-            ),
-
+            )
+        )
+        self.add_task(
             segmentation_task_class(
                 images_dir=os.path.join(self.output(), 'RescaleDicomFilesTask'),
                 model_files_dir=self.input('model_files_dir'),
                 model_version=self.param('model_version'),
                 output_dir=self.output(), 
                 overwrite=overwrite,
-            ),
-
+            )
+        )
+        self.add_task(
             CreatePngsFromSegmentationsTask(
                 segmentations_dir=os.path.join(
                     self.output(), 
@@ -53,8 +55,9 @@ class DefaultPipeline(Task):
                 fig_width=self.param('fig_width'),
                 fig_height=self.param('fig_height'),
                 overwrite=overwrite,
-            ),
-
+            )
+        )
+        self.add_task(
             CalculateScoresTask(
                 images_dir=os.path.join(self.output(), 'RescaleDicomFilesTask'),
                 segmentations_dir=os.path.join(
@@ -65,8 +68,4 @@ class DefaultPipeline(Task):
                 file_type='npy',
                 overwrite=overwrite,
             )
-        ]
-
-    def run(self):
-        for task in self._tasks:
-            task.run()
+        )
