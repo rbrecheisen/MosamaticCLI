@@ -20,6 +20,8 @@ Command-line tool for running processing tasks on medical images
 
 - CT/MRI registration using ANTsPy
 
+- Total Segmentator liver segmentation CT + MRI (Dixon H2O)
+
 - IMAT analysis
 
   Discuss with Leroy how to detect fat inside muscle (either as SAT or 
