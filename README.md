@@ -32,5 +32,15 @@ Command-line tool for running processing tasks on medical images
 
 - Calculate muscle PDFF maps from Dixon MRI after registering with CT
 
+# Commands
+- numpy2nifti
+- createpngsfromdicomfiles
+- selectvertebralslice --engine=ts,moose --vertebra=l3,t4 --position=all,top,middle,bottom
+- registerl3 --modalities=ct/dixon,ct/t1,ct/t2
+- segmentanatomy --engine=ts,moose --masks=all,spine,l3,t4,liver,vessels
+- segmentmusclefatl3[tensorflow] --imat=true,false
+- calculatepdffmap2d --inphase=/path/to/image --outphase=/path/to/image --water=/path/to/image --mask=/path/to/mask (muscle and fat)
+- calculatepdffmap3d --inphase=/path/to/series --outphase=/path/to/series --water=/path/to/series --mask=/path/to/mask (liver)
+
 # Next action
 - Implement slice selection with Total Segmentator
