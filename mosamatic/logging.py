@@ -1,6 +1,9 @@
 import datetime
 
+from mosamatic.singleton import singleton
 
+
+@singleton
 class LogManager:
     def __init__(self):
         self._name = 'mosamatic-cli'
