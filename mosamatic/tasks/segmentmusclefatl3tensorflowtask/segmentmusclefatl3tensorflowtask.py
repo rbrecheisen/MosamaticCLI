@@ -1,5 +1,6 @@
 import os
 import zipfile
+import tempfile
 import numpy as np
 
 import models
@@ -56,20 +57,22 @@ class SegmentMuscleFatL3TensorFlowTask(Task):
                 if not tfLoaded:
                     import tensorflow as tf
                     tfLoaded = True
-                model_dir_unzipped = os.path.join(os.path.split(f_path)[0], 'model_unzipped')
-                os.makedirs(model_dir_unzipped, exist_ok=True)
-                with zipfile.ZipFile(f_path) as zipObj:
-                    zipObj.extractall(path=model_dir_unzipped)
-                model = tf.keras.models.load_model(model_dir_unzipped, compile=False)
+                with tempfile.TemporaryDirectory() as model_dir_unzipped:
+                # model_dir_unzipped = os.path.join(os.path.split(f_path)[0], 'model_unzipped')
+                    os.makedirs(model_dir_unzipped, exist_ok=True)
+                    with zipfile.ZipFile(f_path) as zipObj:
+                        zipObj.extractall(path=model_dir_unzipped)
+                    model = tf.keras.models.load_model(model_dir_unzipped, compile=False)
             elif f_name == f'contour_model-{str(model_version)}.zip':
                 if not tfLoaded:
                     import tensorflow as tf
                     tfLoaded = True
-                contour_model_dir_unzipped = os.path.join(os.path.split(f_path)[0], 'contour_model_unzipped')
-                os.makedirs(contour_model_dir_unzipped, exist_ok=True)
-                with zipfile.ZipFile(f_path) as zipObj:
-                    zipObj.extractall(path=contour_model_dir_unzipped)
-                contour_model = tf.keras.models.load_model(contour_model_dir_unzipped, compile=False)
+                with tempfile.TemporaryDirectory() as contour_model_dir_unzipped:
+                # contour_model_dir_unzipped = os.path.join(os.path.split(f_path)[0], 'contour_model_unzipped')
+                    os.makedirs(contour_model_dir_unzipped, exist_ok=True)
+                    with zipfile.ZipFile(f_path) as zipObj:
+                        zipObj.extractall(path=contour_model_dir_unzipped)
+                    contour_model = tf.keras.models.load_model(contour_model_dir_unzipped, compile=False)
             elif f_name == f'params-{model_version}.json':
                 params = ParamLoader(f_path)
             else:
