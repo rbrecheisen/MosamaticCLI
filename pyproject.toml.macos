@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mosamatic-cli-macos"
-version = "1.6.1"
+version = "1.6.2"
 description = "A CLI tool for body composition analysis from DICOM CT scans (MacOS version)"
 authors = ["Ralph Brecheisen <ralph.brecheisen@gmail.com>"]
 license = "MIT"
