@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "mosamatic-cli-macos"
-version = "1.6.2"
-description = "A CLI tool for body composition analysis from DICOM CT scans (MacOS version)"
+name = "mosamatic-cli"
+version = "1.6.1"
+description = "A CLI tool for body composition analysis from DICOM CT scans (Windows version)"
 authors = ["Ralph Brecheisen <ralph.brecheisen@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -12,9 +12,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
-poetry = "^2.1.4"
 click = "<8.1.8"
-pandas = "^2.3.1"
+pydicom = "^3.0.1"
+#numpy = "^2.3.2"
+numpy = "1.26.4"
+pandas = "^2.3.2"
 openpyxl = "^3.1.5"
 pendulum = "^3.1.0"
 pillow = "^11.3.0"
@@ -23,11 +25,10 @@ torch = "^2.8.0"
 torchvision = "^0.23.0"
 tensorboard = "2.15.2"
 tensorboard-data-server = "0.7.2"
-tensorflow = "2.15.0"
-tensorflow-macos = "2.15.0"
+scipy = "^1.16.1"
 
 [tool.poetry.scripts]
-mosamatic = "mosamatic.main:cli"
+mosamatic-cli = "mosamatic.main:cli"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
