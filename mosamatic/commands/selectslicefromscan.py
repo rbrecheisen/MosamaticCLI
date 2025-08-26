@@ -19,7 +19,7 @@ from mosamatic.tasks import SelectSliceFromScanTask
 @click.option(
     '--vertebral_level',
     default='none',
-    help='Options: "L3", "T4"'
+    help='Options: "vertebrae_L3", "vertebrae_T4"'
 )
 @click.option(
     '--overwrite', 
@@ -40,7 +40,7 @@ def selectslicefromscan(scans_dir, output_dir, vertebral_level, overwrite):
         Path to output directory.
 
     vertebral_level : str
-        Options: 'L3', 'T4'
+        Options: 'vertebrae_L3', 'vertebrae_T4'
     
     overwrite : bool
         Overwrite contents output directory true/false
