@@ -4,6 +4,6 @@ setlocal
 
 copy /Y pyproject.toml.windows pyproject.toml
 
-poetry run mosamatic
+poetry run mosamatic-cli
 
 endlocal
