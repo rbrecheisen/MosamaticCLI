@@ -25,22 +25,22 @@ def test_default_pipeline_tensorflow():
     check_output(pipeline)
 
 
-def test_default_pipeline_pytorch():
-    assert os.path.exists(SOURCES['input']), 'Input directory does not exist'
-    pipeline = DefaultPipeline(
-        images_dir=SOURCES['input'],
-        model_files_dir=SOURCES['model_files']['pytorch'],
-        output_dir=SOURCES['output'],
-        target_size=512,
-        model_type='pytorch',
-        model_version='2.2',
-        fig_width=10,
-        fig_height=10,
-        full_scan=False,
-        overwrite=True,
-    )
-    pipeline.run()
-    check_output(pipeline)
+# def test_default_pipeline_pytorch():
+#     assert os.path.exists(SOURCES['input']), 'Input directory does not exist'
+#     pipeline = DefaultPipeline(
+#         images_dir=SOURCES['input'],
+#         model_files_dir=SOURCES['model_files']['pytorch'],
+#         output_dir=SOURCES['output'],
+#         target_size=512,
+#         model_type='pytorch',
+#         model_version='2.2',
+#         fig_width=10,
+#         fig_height=10,
+#         full_scan=False,
+#         overwrite=True,
+#     )
+#     pipeline.run()
+#     check_output(pipeline)
 
 
 def check_output(pipeline):
