@@ -3202,7 +3202,6 @@ description = "TensorFlow IO"
 optional = false
 python-versions = ">=3.7, <3.12"
 groups = ["main"]
-markers = "platform_system == \"Darwin\" and platform_machine == \"arm64\" or platform_system == \"Linux\" or platform_system == \"Windows\""
 files = [
     {file = "tensorflow_io_gcs_filesystem-0.31.0-cp310-cp310-macosx_10_14_x86_64.whl", hash = "sha256:a71421f8d75a093b6aac65b4c8c8d2f768c3ca6215307cf8c16192e62d992bcf"},
     {file = "tensorflow_io_gcs_filesystem-0.31.0-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:359134ecbd3bf938bb0cf65be4526106c30da461b2e2ce05446a229ed35f6832"},
@@ -3699,4 +3698,4 @@ PyYAML = "*"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.12"
-content-hash = "96c0a1d756dfe8a818caa3c97ad1a165b382cb71400a5ea59ee26d488d301800"
+content-hash = "b25719fa4f2ed9f4fc52779900d165e38fa2858df67a45b5b6521f955351d02c"
